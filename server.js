@@ -5,6 +5,10 @@ const colors = require('colors');
 const morgan = require('morgan');
 
 const connectDB = require('./config/db');
+const errorHandler = require('./middlewares/errorHandler');
+
+// Route files
+const techs = require('./routes/techs');
 
 // Connect to database
 connectDB();
@@ -14,8 +18,14 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-// Routes
-app.get('/', (req, res) => res.send('Hello'));
+// Body parser middleware
+app.use(express.json());
+
+// Mount routes
+app.use('/api/v1/techs', techs);
+
+// Error handler middleware
+app.use(errorHandler);
 
 // Port
 const port = process.env.PORT || 5000;
