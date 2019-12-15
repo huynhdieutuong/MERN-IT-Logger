@@ -1,18 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import Preloader from '../layout/Preloader';
 import LogItem from './LogItem';
 
-const Logs = () => {
-  const [logs, setLogs] = useState([]);
-  const [loading, setLoading] = useState(false);
+import logContext from '../../contexts/log/logContext';
 
-  const getLogs = async () => {
-    setLoading(true);
-    const res = await fetch('/api/v1/logs');
-    const data = await res.json();
-    setLogs(data.data);
-    setLoading(false);
-  };
+const Logs = () => {
+  const { loading, getLogs, logs } = useContext(logContext);
 
   useEffect(() => {
     getLogs();

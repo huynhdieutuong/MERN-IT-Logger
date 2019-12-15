@@ -1,15 +1,23 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import M from 'materialize-css/dist/js/materialize.min.js';
 
 import TechSelectOptions from '../techs/TechSelectOptions';
 import logContext from '../../contexts/log/logContext';
 
-const AddLogModal = () => {
-  const { addLog } = useContext(logContext);
+const EditLogModal = () => {
+  const { current, updateLog } = useContext(logContext);
 
   const [message, setMessage] = useState('');
   const [tech, setTech] = useState('');
   const [attention, setAttention] = useState(false);
+
+  useEffect(() => {
+    if (current) {
+      setMessage(current.message);
+      setTech(current.tech._id);
+      setAttention(current.attention);
+    }
+  }, [current]);
 
   const onSubmit = async e => {
     e.preventDefault();
@@ -18,19 +26,25 @@ const AddLogModal = () => {
       return M.toast({ html: 'Please enter a message and a tech' });
     }
 
-    const newLog = { message, tech, attention };
-    await addLog(newLog);
+    const uptLog = {
+      _id: current._id,
+      message,
+      tech,
+      attention,
+      createAt: Date.now()
+    };
+    await updateLog(uptLog);
 
-    M.toast({ html: 'Created a new log' });
+    M.toast({ html: 'Updated log' });
     setMessage('');
     setTech('');
     setAttention(false);
   };
 
   return (
-    <div id='add-log-modal' className='modal'>
+    <div id='edit-log-modal' className='modal'>
       <div className='modal-content'>
-        <h4>Enter System Log</h4>
+        <h4>Edit Log</h4>
         <div className='row'>
           <div className='input-field col s12'>
             <input
@@ -40,7 +54,6 @@ const AddLogModal = () => {
               value={message}
               onChange={e => setMessage(e.target.value)}
             />
-            <label htmlFor='message'>Log Message</label>
           </div>
         </div>
         <div className='row'>
@@ -84,4 +97,4 @@ const AddLogModal = () => {
   );
 };
 
-export default AddLogModal;
+export default EditLogModal;

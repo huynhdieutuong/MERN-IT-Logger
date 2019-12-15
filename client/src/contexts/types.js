@@ -6,3 +6,14 @@ export const SET_CURRENT_TECH = 'SET_CURRENT_TECH';
 export const CLEAR_CURRENT_TECH = 'CLEAR_CURRENT_TECH';
 export const UPDATE_TECH = 'UPDATE_TECH';
 export const TECHS_ERROR = 'TECHS_ERROR';
+
+// Log
+export const GET_LOGS = 'GET_LOGS';
+export const ADD_LOG = 'ADD_LOG';
+export const DELETE_LOG = 'DELETE_LOG';
+export const SET_CURRENT_LOG = 'SET_CURRENT_LOG';
+export const CLEAR_CURRENT_LOG = 'CLEAR_CURRENT_LOG';
+export const UPDATE_LOG = 'UPDATE_LOG';
+export const LOGS_ERROR = 'LOGS_ERROR';
+export const SET_LOADING = 'SET_LOADING';
+export const SEARCH_LOGS = 'SEARCH_LOGS';

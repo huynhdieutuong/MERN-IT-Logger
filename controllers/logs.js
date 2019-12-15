@@ -7,11 +7,11 @@ const Log = require('../models/Log');
 // @access  Public
 exports.getLogs = asyncHandler(async (req, res, next) => {
   const logs = await Log.find()
+    .sort('createAt')
     .populate({
       path: 'tech',
       select: 'fullName'
-    })
-    .sort('-createAt');
+    });
 
   res.status(200).json({
     success: true,
@@ -42,7 +42,12 @@ exports.getLog = asyncHandler(async (req, res, next) => {
 // @route   POST /api/v1/logs
 // @access  Public
 exports.createLog = asyncHandler(async (req, res, next) => {
-  const log = await Log.create(req.body);
+  let log = await Log.create(req.body);
+
+  log = await Log.findById(log._id).populate({
+    path: 'tech',
+    select: 'fullName'
+  });
 
   res.status(200).json({
     success: true,
@@ -65,6 +70,9 @@ exports.updateLog = asyncHandler(async (req, res, next) => {
   log = await Log.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true
+  }).populate({
+    path: 'tech',
+    select: 'fullName'
   });
 
   res.status(200).json({

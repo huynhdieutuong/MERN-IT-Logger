@@ -4,15 +4,18 @@ import M from 'materialize-css/dist/js/materialize.min.js';
 import './App.css';
 
 import SearchBar from './components/layout/SearchBar';
-import Logs from './components/logs/Logs';
 import AddBtn from './components/layout/AddBtn';
 
+import Logs from './components/logs/Logs';
 import AddLogModal from './components/logs/AddLogModal';
+import EditLogModal from './components/logs/EditLogModal';
+
 import TechListModal from './components/techs/TechListModal';
 import AddTechModal from './components/techs/AddTechModal';
 import EditTechModal from './components/techs/EditTechModal';
 
 import TechState from './contexts/tech/TechState';
+import LogState from './contexts/log/LogState';
 
 const App = () => {
   useEffect(() => {
@@ -20,21 +23,24 @@ const App = () => {
     M.AutoInit();
   });
   return (
-    <TechState>
-      <Fragment>
-        <SearchBar />
-        <div className='container'>
-          <Logs />
-          <AddBtn />
-        </div>
+    <LogState>
+      <TechState>
+        <Fragment>
+          <SearchBar />
+          <div className='container'>
+            <Logs />
+            <AddBtn />
+          </div>
 
-        {/* Modals */}
-        <AddLogModal />
-        <TechListModal />
-        <AddTechModal />
-        <EditTechModal />
-      </Fragment>
-    </TechState>
+          {/* Modals */}
+          <AddLogModal />
+          <EditLogModal />
+          <TechListModal />
+          <AddTechModal />
+          <EditTechModal />
+        </Fragment>
+      </TechState>
+    </LogState>
   );
 };
 
