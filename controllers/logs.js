@@ -7,7 +7,10 @@ const Log = require('../models/Log');
 // @access  Public
 exports.getLogs = asyncHandler(async (req, res, next) => {
   const logs = await Log.find()
-    .populate('tech')
+    .populate({
+      path: 'tech',
+      select: 'fullName'
+    })
     .sort('-createAt');
 
   res.status(200).json({

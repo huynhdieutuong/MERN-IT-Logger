@@ -18,7 +18,7 @@ const TechSelectOptions = () => {
     techs.length > 0 &&
     techs.map(tech => (
       <option key={tech._id} value={tech._id}>
-        {tech.firstName} {tech.lastName}
+        {tech.fullName}
       </option>
     ))
   );

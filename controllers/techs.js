@@ -57,10 +57,12 @@ exports.updateTech = asyncHandler(async (req, res, next) => {
     );
   }
 
-  tech = await Tech.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true
-  });
+  const { firstName, lastName, createAt } = req.body;
+  if (firstName) tech.firstName = firstName;
+  if (lastName) tech.lastName = lastName;
+  if (createAt) tech.createAt = createAt;
+
+  await tech.save();
 
   res.status(200).json({
     success: true,

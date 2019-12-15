@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 
 import M from 'materialize-css/dist/js/materialize.min.js';
 
@@ -10,13 +11,13 @@ const TechItem = ({ tech }) => {
   const onDeleteTech = async () => {
     await deleteTech(tech._id);
 
-    M.toast({ html: `Deleted ${tech.firstName} ${tech.lastName}` });
+    M.toast({ html: `Deleted ${tech.fullName}` });
   };
 
   return (
     <li className='collection-item'>
       <div>
-        {tech.firstName} {tech.lastName}
+        {tech.fullName}
         <a href='#!' className='secondary-content grey-text'>
           <a href='#edit-tech-modal' className='modal-trigger'>
             <i className='material-icons' onClick={() => setCurrentTech(tech)}>
@@ -30,6 +31,10 @@ const TechItem = ({ tech }) => {
       </div>
     </li>
   );
+};
+
+TechItem.propTypes = {
+  tech: PropTypes.object.isRequired
 };
 
 export default TechItem;
