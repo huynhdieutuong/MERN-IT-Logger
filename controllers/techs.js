@@ -6,7 +6,7 @@ const Tech = require('../models/Tech');
 // @route   GET /api/v1/techs
 // @access  Public
 exports.getTechs = asyncHandler(async (req, res, next) => {
-  const techs = await Tech.find();
+  const techs = await Tech.find().populate('logs');
 
   res.status(200).json({
     success: true,
@@ -19,7 +19,7 @@ exports.getTechs = asyncHandler(async (req, res, next) => {
 // @route   GET /api/v1/techs/:id
 // @access  Public
 exports.getTech = asyncHandler(async (req, res, next) => {
-  const tech = await Tech.findById(req.params.id);
+  const tech = await Tech.findById(req.params.id).populate('logs');
 
   if (!tech) {
     return next(
