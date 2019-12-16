@@ -112,10 +112,10 @@ exports.searchLog = asyncHandler(async (req, res, next) => {
     select: 'fullName'
   });
 
+  const regExp = new RegExp(text, 'gi');
+
   logs = logs.filter(
-    log =>
-      log.message.toLowerCase().indexOf(text.toLowerCase()) !== -1 ||
-      log.tech.fullName.toLowerCase().indexOf(text.toLowerCase()) !== -1
+    log => log.message.match(regExp) || log.tech.fullName.match(regExp)
   );
 
   res.status(200).json({

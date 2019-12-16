@@ -1,18 +1,18 @@
-import React, { useState, useContext } from 'react';
+import React, { useRef, useContext } from 'react';
 
 import logContext from '../../contexts/log/logContext';
 
 const SearchBar = () => {
   const { searchLogs, clearSearch } = useContext(logContext);
-  const [text, setText] = useState('');
+  const text = useRef('');
 
   const onSearch = e => {
     e.preventDefault();
-    searchLogs(text);
+    searchLogs(text.current.value);
   };
 
   const onClearSearch = () => {
-    setText('');
+    text.current.value = '';
     clearSearch();
   };
 
@@ -21,12 +21,7 @@ const SearchBar = () => {
       <div className='nav-wrapper'>
         <form onSubmit={onSearch}>
           <div className='input-field'>
-            <input
-              id='search'
-              type='search'
-              value={text}
-              onChange={e => setText(e.target.value)}
-            />
+            <input id='search' type='search' ref={text} />
             <label className='label-icon' htmlFor='search'>
               <i className='material-icons'>search</i>
             </label>
