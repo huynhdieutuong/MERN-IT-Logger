@@ -1,18 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
+
+import techContext from '../../contexts/tech/techContext';
 
 const TechSelectOptions = () => {
-  const [techs, setTechs] = useState([]);
-
-  const getTechs = async () => {
-    const res = await fetch('/api/v1/techs');
-    const data = await res.json();
-    setTechs(data.data);
-  };
-
-  useEffect(() => {
-    getTechs();
-    // eslint-disable-next-line
-  }, []);
+  const { techs } = useContext(techContext);
 
   return (
     techs.length > 0 &&
