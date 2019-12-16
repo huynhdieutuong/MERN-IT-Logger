@@ -7,7 +7,8 @@ import {
   UPDATE_LOG,
   SET_LOADING,
   SEARCH_LOGS,
-  LOGS_ERROR
+  LOGS_ERROR,
+  CLEAR_SEARCH
 } from '../types';
 
 export default (state, action) => {
@@ -36,6 +37,7 @@ export default (state, action) => {
         )
       };
     case SEARCH_LOGS:
+    case CLEAR_SEARCH:
       return {
         ...state,
         logs: action.payload

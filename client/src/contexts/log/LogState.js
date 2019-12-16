@@ -12,7 +12,8 @@ import {
   UPDATE_LOG,
   SET_LOADING,
   SEARCH_LOGS,
-  LOGS_ERROR
+  LOGS_ERROR,
+  CLEAR_SEARCH
 } from '../types';
 
 const LogState = props => {
@@ -131,6 +132,24 @@ const LogState = props => {
     });
   };
 
+  // Clear Search
+  const clearSearch = async () => {
+    const res = await fetch('/api/v1/logs');
+    const data = await res.json();
+
+    if (!data.success) {
+      return dispatch({
+        type: LOGS_ERROR,
+        payload: data.error
+      });
+    }
+
+    dispatch({
+      type: CLEAR_SEARCH,
+      payload: data.data
+    });
+  };
+
   // Set Current Log
   const setCurrentLog = log => {
     dispatch({
@@ -161,7 +180,8 @@ const LogState = props => {
         deleteLog,
         setCurrentLog,
         updateLog,
-        searchLogs
+        searchLogs,
+        clearSearch
       }}
     >
       {props.children}
