@@ -100,3 +100,27 @@ exports.deleteLog = asyncHandler(async (req, res, next) => {
     data: {}
   });
 });
+
+// @desc    Search log
+// @route   GET /api/v1/logs/search?q=text
+// @access  Public
+exports.searchLog = asyncHandler(async (req, res, next) => {
+  const text = req.query.q;
+
+  let logs = await Log.find().populate({
+    path: 'tech',
+    select: 'fullName'
+  });
+
+  logs = logs.filter(
+    log =>
+      log.message.toLowerCase().indexOf(text.toLowerCase()) !== -1 ||
+      log.tech.fullName.toLowerCase().indexOf(text.toLowerCase()) !== -1
+  );
+
+  res.status(200).json({
+    success: true,
+    count: logs.length,
+    data: logs
+  });
+});

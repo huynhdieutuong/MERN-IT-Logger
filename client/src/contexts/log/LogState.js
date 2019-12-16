@@ -12,8 +12,7 @@ import {
   UPDATE_LOG,
   SET_LOADING,
   SEARCH_LOGS,
-  LOGS_ERROR,
-  SET_CURRENT_TECH
+  LOGS_ERROR
 } from '../types';
 
 const LogState = props => {
@@ -114,6 +113,24 @@ const LogState = props => {
     clearCurrentLog();
   };
 
+  // Search Logs
+  const searchLogs = async text => {
+    const res = await fetch(`/api/v1/logs/search?q=${text}`);
+    const data = await res.json();
+
+    if (!data.success) {
+      return dispatch({
+        type: LOGS_ERROR,
+        payload: data.error
+      });
+    }
+
+    dispatch({
+      type: SEARCH_LOGS,
+      payload: data.data
+    });
+  };
+
   // Set Current Log
   const setCurrentLog = log => {
     dispatch({
@@ -143,8 +160,8 @@ const LogState = props => {
         addLog,
         deleteLog,
         setCurrentLog,
-        updateLog
-        // searchLogs
+        updateLog,
+        searchLogs
       }}
     >
       {props.children}

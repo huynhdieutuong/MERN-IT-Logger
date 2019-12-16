@@ -6,13 +6,16 @@ const {
   getLog,
   createLog,
   updateLog,
-  deleteLog
+  deleteLog,
+  searchLog
 } = require('../controllers/logs');
 
 router
   .route('/')
   .get(getLogs)
   .post(createLog);
+
+router.get('/search', searchLog);
 
 router
   .route('/:id')

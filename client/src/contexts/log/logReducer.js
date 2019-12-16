@@ -35,6 +35,11 @@ export default (state, action) => {
           log._id === action.payload._id ? action.payload : log
         )
       };
+    case SEARCH_LOGS:
+      return {
+        ...state,
+        logs: action.payload
+      };
     case SET_CURRENT_LOG:
       return {
         ...state,
